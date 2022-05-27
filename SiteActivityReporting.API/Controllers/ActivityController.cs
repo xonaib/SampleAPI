@@ -17,10 +17,24 @@ namespace SiteActivityReporting.API.Controllers
             _activityRepository = new ActivityRepository();
         }
 
+        /*
+         * in memory data save
+         * scheduler
+         * testing
+         * logging
+         * warnings?
+         * 
+         * on startup, build, in memory?
+         * or on every call, scedule update?
+         * lookup in O(1), pre-calculate results by key
+         */ 
+
         [HttpGet("{key}/total")]
-        public string Get(string key)
+        public ActivityDTO Get(string key)
         {
-            return $"get {key}";
+            ActivityDTO activityDTO = _activityRepository.Get(key);
+
+            return activityDTO;
         }
 
         [HttpPost("{key}")]

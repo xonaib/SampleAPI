@@ -10,18 +10,23 @@ namespace SiteActivityReporting.Model.DTO
 {
     public class ActivityDTO
     {
-        public string Value { get; set; }
+        public ActivityDTO() { }
 
-        
+        public ActivityDTO(string value)
+        {
+            Value = value;
+        }
+        public string Value { get; set; } = "";
+
     }
 
     public static class ActivityDTOExtension
     {
-        public static Activity ToActivity(this ActivityDTO activityDTO, string key)
+        public static Activity ToModel(this ActivityDTO activityDTO, string key)
         {
             int value = Converter.StringToNearestInt(activityDTO.Value);
 
-            Activity activity = new Activity(key, value);            
+            Activity activity = new Activity(key, value);
 
             return activity;
         }

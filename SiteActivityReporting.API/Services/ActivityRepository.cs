@@ -4,7 +4,7 @@ using SiteActivityReporting.Model.Model;
 
 namespace SiteActivityReporting.API.Services
 {
-    public class ActivityRepository
+    public class ActivityRepository : IRepository<ActivityDTO>
     {
         private readonly InMemoryActivity _inMemoryActivity;
 
@@ -12,17 +12,24 @@ namespace SiteActivityReporting.API.Services
         {
             _inMemoryActivity = new InMemoryActivity();
         }
-        public IEnumerable<Activity> GetByKey(string key)
+        public ActivityDTO Get(string key)
         {
-            throw new NotImplementedException();
+            Activity activity = _inMemoryActivity.Get(key);
+            ActivityDTO activityDTO = activity.ToDTO();
+
+            return activityDTO;
         }
 
         public bool Save(string key, ActivityDTO activityDTO)
         {
-            Activity activity = activityDTO.ToActivity(key);
+            Activity activity = activityDTO.ToModel(key);
             bool result = _inMemoryActivity.Save(activity);
             return result;
+        }
 
+        public bool PruneData(int dataOlderThanSeconds)
+        {
+            return _inMemoryActivity.PruneData(dataOlderThanSeconds);
         }
     }
 }
