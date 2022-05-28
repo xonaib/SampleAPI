@@ -5,5 +5,7 @@
         T Get(string key);
 
         bool Save(T entity);
+
+        bool PruneData(int dataOlderThanSeconds);
     }
 }

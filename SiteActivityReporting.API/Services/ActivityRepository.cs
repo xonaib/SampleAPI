@@ -6,15 +6,16 @@ namespace SiteActivityReporting.API.Services
 {
     public class ActivityRepository : IRepository<ActivityDTO>
     {
-        private readonly InMemoryActivity _inMemoryActivity;
+        private readonly IStore<Activity> _store;
 
-        public ActivityRepository()
+        public ActivityRepository(IStore<Activity> store)
         {
-            _inMemoryActivity = new InMemoryActivity();
+            _store = store;
+            //_inMemoryActivity = new InMemoryActivity();
         }
         public ActivityDTO Get(string key)
         {
-            Activity activity = _inMemoryActivity.Get(key);
+            Activity activity = _store.Get(key);
             ActivityDTO activityDTO = activity.ToDTO();
 
             return activityDTO;
@@ -23,13 +24,14 @@ namespace SiteActivityReporting.API.Services
         public bool Save(string key, ActivityDTO activityDTO)
         {
             Activity activity = activityDTO.ToModel(key);
-            bool result = _inMemoryActivity.Save(activity);
+            bool result = _store.Save(activity);
             return result;
         }
 
         public bool PruneData(int dataOlderThanSeconds)
         {
-            return _inMemoryActivity.PruneData(dataOlderThanSeconds);
+            //throw new NotImplementedException();
+            return _store.PruneData(dataOlderThanSeconds);
         }
     }
 }
