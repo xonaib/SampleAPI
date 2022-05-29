@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteActivityReporting.API",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteActivityReporting.Model", "SiteActivityReporting.Model\SiteActivityReporting.Model.csproj", "{85593F16-98BA-4DD1-B067-4334F025FA61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteActivityReporting.Utils", "SiteActivityReporting.Utils\SiteActivityReporting.Utils.csproj", "{E67B2D0D-F42E-4028-84A4-89BB570A69A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteActivityReporting.Utils", "SiteActivityReporting.Utils\SiteActivityReporting.Utils.csproj", "{E67B2D0D-F42E-4028-84A4-89BB570A69A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteActivityReporting.Test", "SiteActivityReporting.Test\SiteActivityReporting.Test.csproj", "{1A3A2A4F-D1A4-46DC-9E76-C982673AEA89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{E67B2D0D-F42E-4028-84A4-89BB570A69A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E67B2D0D-F42E-4028-84A4-89BB570A69A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E67B2D0D-F42E-4028-84A4-89BB570A69A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A3A2A4F-D1A4-46DC-9E76-C982673AEA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A3A2A4F-D1A4-46DC-9E76-C982673AEA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A3A2A4F-D1A4-46DC-9E76-C982673AEA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A3A2A4F-D1A4-46DC-9E76-C982673AEA89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

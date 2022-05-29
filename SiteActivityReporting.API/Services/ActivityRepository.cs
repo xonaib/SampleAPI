@@ -11,7 +11,6 @@ namespace SiteActivityReporting.API.Services
         public ActivityRepository(IStore<Activity> store)
         {
             _store = store;
-            //_inMemoryActivity = new InMemoryActivity();
         }
         public ActivityDTO Get(string key)
         {
@@ -30,7 +29,6 @@ namespace SiteActivityReporting.API.Services
 
         public bool PruneData(int dataOlderThanSeconds)
         {
-            //throw new NotImplementedException();
             return _store.PruneData(dataOlderThanSeconds);
         }
     }

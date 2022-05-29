@@ -37,18 +37,25 @@ namespace SiteActivityReporting.API.Controllers
          */
 
         [HttpGet("{key}/total")]
-        public ActivityDTO Get(string key)
+        public IActionResult Get(string key)
         {
+            if (string.IsNullOrEmpty(key))
+                return BadRequest();
+
             ActivityDTO activityDTO = _activityRepository.Get(key);
 
-            return activityDTO;
+            return Ok(activityDTO);
         }
 
         [HttpPost("{key}")]
-        public string Post(string key, [FromBody] ActivityDTO activity)
+        public IActionResult Post(string key, [FromBody] ActivityDTO activity)
         {
+            if (string.IsNullOrEmpty(key))
+                return BadRequest();
+            
             bool result = _activityRepository.Save(key, activity);
-            return $"post {key} {activity.Value}";
+
+            return result ? Ok() : BadRequest();
         }
 
     }

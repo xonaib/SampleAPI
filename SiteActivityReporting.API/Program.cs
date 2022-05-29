@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 //builder.Services.Add(new ServiceDescriptor(typeof(ActivityCleaner), cleaner));
 
 builder.Services.AddSingleton<IRepository<ActivityDTO>, ActivityRepository>();
-builder.Services.AddSingleton<IStore<Activity>, InMemoryActivity>();
+builder.Services.AddSingleton<IStore<Activity>, ActivityStore>();
 builder.Services.AddSingleton<IObservable<Activity>, ActivityCleaner>();
 builder.Services.AddSingleton<IActivityEventBus, ActivityCleaner>();
 builder.Services.AddSingleton<ActivityCleaner, ActivityCleaner>();

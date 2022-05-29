@@ -4,7 +4,7 @@ using SiteActivityReporting.Model.Model;
 
 namespace SiteActivityReporting.API.DAL
 {
-    public class InMemoryActivity : IStore<Activity>, IObserver<Activity>
+    public class ActivityStore : IStore<Activity> //, IObserver<Activity>
     {
         private Dictionary<string, List<Activity>> _activities;
         private Dictionary<string, int> _runningCounts;
@@ -12,9 +12,9 @@ namespace SiteActivityReporting.API.DAL
         //private IObservable<Activity> _activityEventsBus;
         //private IDisposable _cancellation;
 
-       // private ActivityCleaner _cleaner;
+        // private ActivityCleaner _cleaner;
 
-        public InMemoryActivity() //ActivityCleaner cleaner
+        public ActivityStore() //ActivityCleaner cleaner
         {
             _activities = new Dictionary<string, List<Activity>>();
             _runningCounts = new Dictionary<string, int>();
@@ -27,12 +27,16 @@ namespace SiteActivityReporting.API.DAL
 
         public Activity Get(string key)
         {
-            Activity activity = new Activity();
-            int? count = _runningCounts.Where(k => k.Key.Equals(key)).Select(s => s.Value).FirstOrDefault();
-            
+            Activity activity = null;
+
+            int? count = null;
+
+            if (_runningCounts.ContainsKey(key))
+                count = _runningCounts.Where(k => k.Key.Equals(key)).Select(s => s.Value).FirstOrDefault();
+
             if (count != null)
                 activity = new Activity(key, count ?? 0);
-            
+
             return activity;
         }
 
@@ -47,7 +51,7 @@ namespace SiteActivityReporting.API.DAL
             }
 
             activities.Add(activity);
-            
+
             Task.Factory.StartNew(() => UpdateCounts(activity));
             //_ = UpdateCounts(activity);
             //_cleaner.NewActivity(activity);
@@ -57,10 +61,10 @@ namespace SiteActivityReporting.API.DAL
         public bool PruneData(int dataOlderThanSeconds)
         {
             int negativeCount = dataOlderThanSeconds;
-            
+
             _runningCounts = new Dictionary<string, int>();
 
-            foreach(var activity in _activities)
+            foreach (var activity in _activities)
             {
                 List<Activity> items = activity.Value;
                 items = items.Where(s => s.CreatedOn >= DateTime.Now.AddSeconds(negativeCount)).ToList();
