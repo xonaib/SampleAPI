@@ -1,6 +1,7 @@
 ﻿using SiteActivityReporting.API.BackgroundService;
 using SiteActivityReporting.Model.DTO;
 using SiteActivityReporting.Model.Model;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SiteActivityReporting.API.DAL
 {
@@ -53,40 +54,31 @@ namespace SiteActivityReporting.API.DAL
             activities.Add(activity);
 
             Task.Factory.StartNew(() => UpdateCounts(activity));
-            //_ = UpdateCounts(activity);
-            //_cleaner.NewActivity(activity);
+            
             return true;
         }
 
-        public bool PruneData(int dataOlderThanSeconds)
+        public bool PruneData(int dataOlderThanMinutes)
         {
-            int negativeCount = dataOlderThanSeconds;
+            int negativeCount = dataOlderThanMinutes * -1;
 
             _runningCounts = new Dictionary<string, int>();
 
             foreach (var activity in _activities)
             {
                 List<Activity> items = activity.Value;
-                items = items.Where(s => s.CreatedOn >= DateTime.Now.AddSeconds(negativeCount)).ToList();
+                items = items.Where(s => s.CreatedOn >= DateTime.Now.AddMinutes(negativeCount)).ToList();
 
                 int total = items.Select(s => s.Value).Sum();
+                // update with new items
+                _activities[activity.Key] = items;
                 _runningCounts.Add(activity.Key, total);
             }
 
             return true;
         }
-
-        public void OnCompleted()
-        {
-            //throw new NotImplementedException();
-        }
-
-        public void OnError(Exception error)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public async Task<bool> UpdateCounts(Activity activity)
+        [ExcludeFromCodeCoverage]
+        private async Task<bool> UpdateCounts(Activity activity)
         {
             List<Activity> activities = _activities.Where(v => v.Key.Equals(activity.Key)).Select(s => s.Value).FirstOrDefault();
             int total = 0;
@@ -102,24 +94,6 @@ namespace SiteActivityReporting.API.DAL
                 _runningCounts[activity.Key] = total;
 
             return await Task.FromResult(true);
-        }
-
-        public void OnNext(Activity activity)
-        {
-            List<Activity> activities = _activities.Where(v => v.Key.Equals(activity.Key)).Select(s => s.Value).FirstOrDefault();
-            int total = 0;
-
-            if (activities == null)
-                return;
-
-            total = activities.Select(s => s.Value).Sum();
-
-            _runningCounts.Add(activity.Key, total);
-        }
-
-        public virtual void Unsubscribe()
-        {
-            //_cancellation.Dispose();
         }
     }
 }

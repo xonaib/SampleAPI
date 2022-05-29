@@ -6,6 +6,6 @@
 
         bool Save(T entity);
 
-        bool PruneData(int dataOlderThanSeconds);
+        bool PruneData(int dataOlderThanMinutes);
     }
 }

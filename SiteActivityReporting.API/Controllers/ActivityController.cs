@@ -12,14 +12,15 @@ namespace SiteActivityReporting.API.Controllers
     {
         private readonly ILogger<ActivityController> _logger;
         private readonly IRepository<ActivityDTO> _activityRepository;
-        private ActivityCleaner _activityCleaner;
-        public ActivityController(ILogger<ActivityController> logger, IRepository<ActivityDTO> activityRepository, ActivityCleaner activityCleaner)
+        private ActivitySceduler _activitySceduler;
+        public ActivityController(ILogger<ActivityController> logger, IRepository<ActivityDTO> activityRepository, ActivitySceduler activitySceduler)
         {
             _logger = logger;
             _activityRepository = activityRepository;
 
-            _activityCleaner = activityCleaner;
-            Task.Factory.StartNew(() => _activityCleaner.CleanOlderData());
+            // start sceduler, to clean up redundant data automatically
+            _activitySceduler = activitySceduler;
+            Task.Factory.StartNew(() => _activitySceduler.CleanOlderData(1));
         }
 
         /*

@@ -5,6 +5,6 @@
         public T Get(string key);
         public bool Save(string key, T entity);
 
-        bool PruneData(int dataOlderThanSeconds);
+        bool PruneData(int dataOlderThanMinutes);
     }
 }

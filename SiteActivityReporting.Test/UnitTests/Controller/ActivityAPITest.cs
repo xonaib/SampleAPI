@@ -26,8 +26,8 @@ namespace SiteActivityReporting.Test.UnitTests.Controller
         private readonly Mock<IRepository<ActivityDTO>> _mockRepository;
         private readonly IRepository<ActivityDTO> _repository;
 
-        private readonly Mock<ActivityCleaner> _mockActivityCleaner;
-        private readonly ActivityCleaner _activityCleaner;
+        private readonly Mock<ActivitySceduler> _mockActivityCleaner;
+        private readonly ActivitySceduler _activityCleaner;
 
         private readonly Mock<IStore<Activity>> _mockStore;
         private readonly IStore<Activity> _store;
@@ -46,7 +46,7 @@ namespace SiteActivityReporting.Test.UnitTests.Controller
             _repository = _mockRepository.Object;
 
             // since this is a concrete object
-            _mockActivityCleaner = new Mock<ActivityCleaner>(_repository);
+            _mockActivityCleaner = new Mock<ActivitySceduler>(_repository);
             _activityCleaner = _mockActivityCleaner.Object;
 
             _logger = _mockLogger.Object;
@@ -112,7 +112,7 @@ namespace SiteActivityReporting.Test.UnitTests.Controller
             {
                 var logger = scope.ServiceProvider.GetService<ILogger<ActivityController>>();
                 var repository = scope.ServiceProvider.GetService<IRepository<ActivityDTO>>();
-                var activityCleaner = scope.ServiceProvider.GetService<ActivityCleaner>();
+                var activityCleaner = scope.ServiceProvider.GetService<ActivitySceduler>();
 
                 ActivityController controller = new ActivityController(logger, repository, activityCleaner);
 

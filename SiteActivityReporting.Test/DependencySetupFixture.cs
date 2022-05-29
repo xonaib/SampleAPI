@@ -21,9 +21,7 @@ namespace SiteActivityReporting.Test
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton<IRepository<ActivityDTO>, ActivityRepository>();
             serviceCollection.AddSingleton<IStore<Activity>, ActivityStore>();
-            serviceCollection.AddSingleton<IObservable<Activity>, ActivityCleaner>();
-            serviceCollection.AddSingleton<IActivityEventBus, ActivityCleaner>();
-            serviceCollection.AddSingleton<ActivityCleaner, ActivityCleaner>();
+            serviceCollection.AddSingleton<ActivitySceduler, ActivitySceduler>();
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }

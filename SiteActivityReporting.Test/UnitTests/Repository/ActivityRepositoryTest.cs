@@ -64,6 +64,14 @@ namespace SiteActivityReporting.Test.UnitTests.Repository
             Assert.True(result);
         }
 
+        [Fact]
+        public void PruneActivities_Valid()
+        {
+            _mockStore.Setup(s => s.PruneData(1)).Returns(true);
+            bool result = _repository.PruneData(1);
+
+            Assert.True(result);
+        }
 
     }
 }

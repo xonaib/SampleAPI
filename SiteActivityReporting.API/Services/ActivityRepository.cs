@@ -23,13 +23,17 @@ namespace SiteActivityReporting.API.Services
         public bool Save(string key, ActivityDTO activityDTO)
         {
             Activity activity = activityDTO.ToModel(key);
-            bool result = _store.Save(activity);
+            bool result = false;
+            
+            if (activity != null)
+                result = _store.Save(activity);
+
             return result;
         }
 
-        public bool PruneData(int dataOlderThanSeconds)
+        public bool PruneData(int dataOlderThanMinutes)
         {
-            return _store.PruneData(dataOlderThanSeconds);
+            return _store.PruneData(dataOlderThanMinutes);
         }
     }
 }

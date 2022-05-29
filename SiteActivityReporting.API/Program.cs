@@ -22,9 +22,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IRepository<ActivityDTO>, ActivityRepository>();
 builder.Services.AddSingleton<IStore<Activity>, ActivityStore>();
-builder.Services.AddSingleton<IObservable<Activity>, ActivityCleaner>();
-builder.Services.AddSingleton<IActivityEventBus, ActivityCleaner>();
-builder.Services.AddSingleton<ActivityCleaner, ActivityCleaner>();
+//builder.Services.AddSingleton<IObservable<Activity>, ActivityCleaner>();
+//builder.Services.AddSingleton<IActivityEventBus, ActivityCleaner>();
+builder.Services.AddSingleton<ActivitySceduler, ActivitySceduler>();
 //builder.Services.AddScoped()
 
 var app = builder.Build();

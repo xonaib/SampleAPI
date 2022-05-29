@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SiteActivityReporting.Model.DTO
 {
+    [ExcludeFromCodeCoverage]
     public class ActivityDTO
     {
         public ActivityDTO() { }
@@ -20,11 +22,15 @@ namespace SiteActivityReporting.Model.DTO
 
     }
 
+    [ExcludeFromCodeCoverage]
     public static class ActivityDTOExtension
     {
         public static Activity ToModel(this ActivityDTO activityDTO, string key)
         {
             int value = Converter.StringToNearestInt(activityDTO.Value);
+
+            if (value == -1)
+                return null;
 
             Activity activity = new Activity(key, value);
 
